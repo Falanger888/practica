@@ -12,7 +12,7 @@ body {
 }
 
 .dropbtn {
-  background-color: #04aa6d;
+  background-color: #3C3CFF;
   color: white;
   padding: 16px;
   font-size: 16px;
@@ -48,7 +48,7 @@ body {
   display: block;
 }
 .dropdown:hover .dropbtn {
-  background-color: #3e8e41;
+  background-color: #6161AA;
 }
 
 .stage-box {
