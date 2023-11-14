@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conveyor Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Conveyor Simulation</h1>
+    <div id="stage-box" class="stage-box">
+        <div class="stage  status_green">
+            <h4>Сушилка БРС</h4>
+            <div class="img-box"><img src="img/placeholder.jpg" alt="#"></div>
+            <div class="material">
+                <div class="material-start">
+                    <ul>
+                        <li id="id_0">id_1</li>
+                    </ul>
+                </div>
+                <div class="material-exit" id="materialExit1"></div>
+            </div>
+            <div class="arrow">→</div>
+        </div>
+        <div class="stage status_green">
+            <h4>Пресс</h4>
+            <div class="img-box"><img src="img/placeholder.jpg" alt="#"></div>
+            <div class="material">
+                <div class="material-start">
+                    <ul>
+                        <li id="id_1">id_1</li>
+                    </ul>
+                </div>
+                <div class="material-exit" id="materialExit2"></div>
+            </div>
+            <div class="arrow">→</div>
+        </div>
+        <div hidden class="stage status_green materialExit_storage">
+            <h4>Склад</h4>
+            <div class="img-box"><img src="img/placeholder.jpg" alt="#"></div>
+            <div class="material">
+                <div class="material-start">
+                    <ul>
+                        <li id="id_2">id_1</li>
+                    </ul>
+                </div>
+                <div class="material-exit" id="materialExit_storageOne"></div>
+            </div>
+            <div class="arrow">→</div>
+        </div>
+        <div class="stage status_green">
+            <h4>Сушилка плитки</h4>
+            <div class="img-box"><img src="img/placeholder.jpg" alt="#"></div>
+            <div class="material">
+                <div class="material-start">
+                    <ul>
+                        <li id="id_3">id_1</li>
+                    </ul>
+                </div>
+                <div class="material-exit" id="materialExit3"></div>
+            </div>
+            <div class="arrow">→</div>
+        </div>
+        <div class="stage status_green">
+            <h4>Глазирование</h4>
+            <div class="img-box"><img src="img/placeholder.jpg" alt="#"></div>
+            <div class="material">
+                <div class="material-start">
+                    <ul>
+                        <li id="id_4">id_1</li>
+                    </ul>
+                </div>
+                <div class="material-exit" id="materialExit4"></div>
+            </div>
+            <div class="arrow">→</div>
+        </div>
+        <div class="stage status_green">
+            <h4>Печь</h4>
+            <div class="img-box"><img src="img/placeholder.jpg" alt="#"></div>
+            <div class="material">
+                <div class="material-start">
+                    <ul>
+                        <li id="id_5">id_1</li>
+                    </ul>
+                </div>
+                <div class="material-exit" id="materialExit5"></div>
+            </div>
+            <div class="arrow">→</div>
+        </div>
+        <div class="stage status_green">
+            <h4>Фрезер</h4>
+            <div class="img-box"><img src="img/placeholder.jpg" alt="#"></div>
+            <div class="material">
+                <div class="material-start">
+                    <ul>
+                        <li id="id_6">id_1</li>
+                    </ul>
+                </div>
+                <div class="material-exit" id="materialExit6"></div>
+            </div>
+            <div class="arrow">→</div>
+        </div>
+        <div class="stage status_green">
+            <h4>Сортировка</h4>
+            <div class="img-box"><img src="img/placeholder.jpg" alt="#"></div>
+            <div class="material">
+                <div class="material-start">
+                    <ul>
+                        <li id="id_7">id_1</li>
+                    </ul>
+                </div>
+                <div class="material-exit" id="materialExit7"></div>
+            </div>
+            <div class="arrow">→</div>
+        </div>
+        <div hidden class="stage status_green materialExit_storage">
+            <h4>Буферный склад 2</h4>
+            <div class="img-box"><img src="img/placeholder.jpg" alt="#"></div>
+            <div class="material">
+                <div class="material-start">
+                    <ul>
+                        <li id="id_8">id_1</li>
+                    </ul>
+                </div>
+                <div class="material-exit" id="materialExit_storageDiv"></div>
+            </div>
+            <div class="arrow">→</div>
+        </div>
+        <div class="stage status_green">
+            <h4>Упаковка</h4>
+            <div class="img-box"><img src="img/placeholder.jpg" alt="#"></div>
+            <div class="material">
+                <div class="material-start">
+                    <ul>
+                        <li id="id_9">id_1</li>
+                    </ul>
+                </div>
+                <div class="material-exit" id="materialExit8"></div>
+            </div>
+            <div class="arrow">→</div>
+        </div>
+    </div>
+
+    <div id="materialExit_storageDiv"></div>
+
+    <button id="yourButtonId">Запустить симуляцию</button>
+
+
+    <script>
+        var Numnam = 1;
+        var intervalId;  // Добавлено для хранения ID интервала
+
+        function generateRandomInput() {
+            return Math.floor(Math.random() * 100) + 1;
+        }
+
+        function simulateProcessing(data) {
+            return data * 0.9;
+        }
+
+        function updateAndDisplayData(data, stage) {
+            var element = document.querySelectorAll(".materialExit_storage");
+            var isHidden1 = element[0].getAttribute("hidden");
+            var isHidden2 = element[1].getAttribute("hidden");
+            const outputElement = document.getElementById('materialExit' + Numnam);
+
+            if (!(element[0].hidden) && !(element[1].hidden)) {
+                const outputElementStorage = document.getElementById('materialExit_storageOne');
+                if (stage === "materialExit_storage") {
+                    outputElementStorage.innerHTML = '';
+                }
+                let textStageTwo = document.querySelector('#materialExit2').textContent;
+                outputElementStorage.innerHTML += textStageTwo;
+                setTimeout(function () {
+                    outputElementStorage.innerHTML = ''
+                }, 950);
+
+            }
+
+            if (stage === Numnam) {
+                outputElement.innerHTML = '';
+            }
+            Numnam = Numnam + 1;
+            outputElement.innerHTML += `${data.toFixed(2)}`;
+        }
+
+        function startSimulation() {
+            let inputData = generateRandomInput();
+            let currentStage = 1;
+            const outputElement = document.getElementById('materialExit' + Numnam);
+
+            intervalId = setInterval(
+                function () {
+                    inputData = simulateProcessing(inputData);
+                    updateAndDisplayData(inputData, currentStage);
+
+                    var random_kub = Math.floor(Math.random() * 10);
+                    var errorStage = Math.floor(Math.random() * 8);
+                    if (random_kub === 5) {
+                        for (var i = 0; i < errorStage; i++) {
+                            document.getElementsByClassName("stage")[i].classList.add("orange");
+                        }
+
+                        document.getElementsByClassName("stage")[errorStage].classList.add("red");
+                        setTimeout(function () {
+                            if (confirm("Произошел сбой на линии, остановить производство?")) {
+                                clearInterval(intervalId);  // Остановить интервал при подтверждении
+
+                            }
+                            else {
+                                var element = document.querySelectorAll(".materialExit_storage");
+                                element[0].removeAttribute("hidden");
+                                element[1].removeAttribute("hidden");
+                            }
+                        }, 500);
+                    } else {
+                        for (var i = random_kub; i < document.getElementsByClassName("stage").length; i++) {
+                            document.getElementsByClassName("stage")[i].classList.remove("orange", "red");
+                        }
+                    }
+
+                    currentStage++;
+
+                    if (currentStage > 8) {
+                        currentStage = 1;
+                        Numnam = 1;
+                        inputData = generateRandomInput();
+                        var stageElements = document.querySelectorAll(".stage");
+                        stageElements.forEach(function (element) {
+                            element.classList.remove("orange", "red");
+                        });
+                    }
+
+                }, 1000);
+
+        }
+
+        // Добавлен обработчик событий для кнопки
+        document.getElementById('yourButtonId').addEventListener('click', function () {
+
+            startSimulation();  // Запуск симуляции при нажатии на кнопку
+        });
+
+        window.onload = startSimulation;
+    </script>
+</body>
+
+</html>
