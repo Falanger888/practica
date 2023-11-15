@@ -25,6 +25,7 @@
                 return errorStageStatus
             }
         }
+
         function BRS(v) {
             let errorStageStatus = randomStage('BRS')
             console.log(errorStageStatus);
@@ -35,6 +36,7 @@
             outputElement.innerHTML += `${v}<br>`;
             return v;
         }
+
         function Press(v) {
             let errorStageStatus = randomStage('Press')
             console.log(errorStageStatus);
@@ -45,6 +47,7 @@
             outputElement.innerHTML += `${v}<br>`;
             return v;
         }
+
         function Suhka(v) {
             let errorStageStatus = randomStage('Suhka')
             console.log(errorStageStatus);
@@ -55,6 +58,7 @@
             outputElement.innerHTML += `${v}<br>`;
             return v;
         }
+
         function Glaz(v) {
             let errorStageStatus = randomStage('Glaz')
             console.log(errorStageStatus);
@@ -65,35 +69,39 @@
             outputElement.innerHTML += `${v}<br>`;
             return v;
         }
-        // function Peh(v) {
-        //     const outputElement = document.querySelector('.output');
-        //     outputElement.innerHTML += `${v} 5<br>`;
-        //     v = v + 5;
-        //     outputElement.innerHTML += `${v}<br>`;
-        //     return v;
-        // }
-        // function Frezer(v) {
-        //     const outputElement = document.querySelector('.output');
-        //     outputElement.innerHTML += `${v} 6<br>`;
-        //     v = v + 5;
-        //     outputElement.innerHTML += `${v}<br>`;
-        //     return v;
-        // }
-        // function Sort(v) {
-        //     const outputElement = document.querySelector('.output');
-        //     outputElement.innerHTML += `${v} 7<br>`;
-        //     v = v + 5;
-        //     outputElement.innerHTML += `${v}<br>`;
-        //     return v;
-        // }
-        // function Upok(v) {
-        //     const outputElement = document.querySelector('.output');
-        //     outputElement.innerHTML += `${v} 8<br>`;
-        //     v = v + 5;
-        //     outputElement.innerHTML += `${v}<br>`;
-        //     return v;
-        // }
-        
+
+        function Peh(v) {
+            const outputElement = document.querySelector('.output');
+            outputElement.innerHTML += `${v} 5<br>`;
+            v = v + 5;
+            outputElement.innerHTML += `${v}<br>`;
+            return v;
+        }
+
+        function Frezer(v) {
+            const outputElement = document.querySelector('.output');
+            outputElement.innerHTML += `${v} 6<br>`;
+            v = v + 5;
+            outputElement.innerHTML += `${v}<br>`;
+            return v;
+        }
+
+        function Sort(v) {
+            const outputElement = document.querySelector('.output');
+            outputElement.innerHTML += `${v} 7<br>`;
+            v = v + 5;
+            outputElement.innerHTML += `${v}<br>`;
+            return v;
+        }
+
+        function Upok(v) {
+            const outputElement = document.querySelector('.output');
+            outputElement.innerHTML += `${v} 8<br>`;
+            v = v + 5;
+            outputElement.innerHTML += `${v}<br>`;
+            return v;
+        }
+
         function Sklad1(v) {
             const outputElement = document.querySelector('.output');
             outputElement.innerHTML += `${v} 9<br>`;
@@ -101,6 +109,7 @@
             outputElement.innerHTML += `${v}<br>`;
             return v;
         }
+
         function Sklad2(v) {
             const outputElement = document.querySelector('.output');
             outputElement.innerHTML += `${v} 10<br>`;
@@ -117,17 +126,8 @@
             });
         };
 
-
-
-
-
-
-
-
-
         const executePipeline = async () => {
             var random_kub = Math.floor(Math.random() * 5);
-
 
             if (random_kub == 3) {
                 alert("Ошибка")
@@ -140,12 +140,10 @@
                 delayAndCall(Press, 1000),
                 delayAndCall(Suhka, 1000),
                 delayAndCall(Glaz, 1000),
-                // delayAndCall(Peh, 1000),
-                // delayAndCall(Frezer, 1000),
-                // delayAndCall(Sort, 1000),
-                // delayAndCall(Upok, 1000)
-                
-                
+                delayAndCall(Peh, 1000),
+                delayAndCall(Frezer, 1000),
+                delayAndCall(Sort, 1000),
+                delayAndCall(Upok, 1000)
             );
 
             const pipelineWithSklad2 = pipe(
@@ -185,91 +183,78 @@
         // Вызов основной функции
         executePipeline();
 
+        const outputDiv = document.querySelector('.output');
 
+        const step1 = (data) => {
+            outputDiv.innerHTML += `<p>Шаг 1: ${data}</p>`;
+            return data + 1;
+        };
 
+        const step2 = (data) => {
+            outputDiv.innerHTML += `<p>Шаг 2: ${data}</p>`;
+            return data * 2;
+        };
 
-        const outputDiv = document.getElementById('output');
+        const step3 = (data) => {
+            outputDiv.innerHTML += `<p>Шаг 3: ${data}</p>`;
+            return data - 3;
+        };
+        const pipeline = () => {
+            let intermediateData = 0;
+            let isPaused = false;
+            let steps = 0;
+            const maxSteps = 8; // Maximum number of steps
 
-    const step1 = (data) => {
-      outputDiv.innerHTML += `<p>Шаг 1: ${data}</p>`;
-      return data + 1;
-    };
+            const pausePipeline = () => {
+                isPaused = true;
+                outputDiv.innerHTML += "<p>Конвейер приостановлен</p>";
+            };
 
-    const step2 = (data) => {
-      outputDiv.innerHTML += `<p>Шаг 2: ${data}</p>`;
-      return data * 2;
-    };
+            const resumePipeline = () => {
+                isPaused = false;
+                outputDiv.innerHTML += "<p>Конвейер возобновлен</p>";
+                runPipeline();
+            };
 
-    const step3 = (data) => {
-      outputDiv.innerHTML += `<p>Шаг 3: ${data}</p>`;
-      return data - 3;
-    };
+            const runPipeline = () => {
+                if (isPaused) {
+                    outputDiv.innerHTML += "<p>Конвейер завершен</p>";
+                    return;
+                }
 
-    const pipeline = () => {
-      let intermediateData = 0;
-      let isPaused = false;
-      let steps = 0;
-      const maxSteps = 8;
-      const pipelineWithoutSklad1 = pipe(
-                delayAndCall(BRS, 1000),
-                delayAndCall(Press, 1000),
-                delayAndCall(Suhka, 1000),
-                delayAndCall(Glaz, 1000),
-                // delayAndCall(Peh, 1000),
-                // delayAndCall(Frezer, 1000),
-                // delayAndCall(Sort, 1000),
-                // delayAndCall(Upok, 1000)
-                
-                
-            );
-         // Максимальное количество шагов
+                intermediateData = step1(intermediateData);
+                intermediateData = step2(intermediateData);
+                intermediateData = step3(intermediateData);
 
-      const pausePipeline = () => {
-        isPaused = true;
-        outputDiv.innerHTML += "<p>Конвейер приостановлен</p>";
-      };
+                steps++;
 
-      const resumePipeline = () => {
-        isPaused = false;
-        outputDiv.innerHTML += "<p>Конвейер возобновлен</p>";
-        runPipeline();
-      };
+                // Check for additional conditions to pause or stop the pipeline
+                if (steps >= maxSteps) {
+                    outputDiv.innerHTML += "<p>Достигнуто максимальное количество шагов</p>";
+                    return;
+                }
 
-      const runPipeline = () => {
-        if (isPaused ) {
-          outputDiv.innerHTML += "<p>Конвейер завершен</p>";
-          return;
-        }
+                // Continue the pipeline execution
+                setTimeout(runPipeline, 1000); // Pause for 1 second between steps
+            };
 
-        intermediateData = step1(intermediateData);
-        intermediateData = step2(intermediateData);
-        intermediateData = step3(intermediateData);
+            runPipeline();
 
-        steps++;
+            return {
+                pause: pausePipeline,
+                resume: resumePipeline,
+            };
+        };
 
-        // Добавьте здесь дополнительную логику или условия для приостановки
+        let pipelineInstance = pipeline();
 
-        // Продолжаем выполнение конвейера
-        setTimeout(runPipeline, 1000); // Пауза в 1 секунду между шагами
-      };
+        const pausePipeline = () => {
+            pipelineInstance.pause();
+        };
 
-      runPipeline();
-
-      return {
-        pause: pausePipeline,
-        resume: resumePipeline,
-      };
-    };
-
-    let pipelineInstance = pipeline();
-
-    const pausePipeline = () => {
-      pipelineInstance.pause();
-    };
-
-    const resumePipeline = () => {
-      pipelineInstance.resume();
-    };
+        const resumePipeline = () => {
+            pipelineInstance.resume();
+        };
     </script>
 </body>
 
